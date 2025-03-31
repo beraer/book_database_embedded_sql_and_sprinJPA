@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:./db/books;DATABASE_TO_UPPER=false
+    username: bera
+    password:
+  h2:
+    console:
+      path: /my-books-console
+      enabled: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:sql-data/*.sql
