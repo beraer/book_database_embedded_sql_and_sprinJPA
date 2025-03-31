@@ -5,52 +5,31 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     private String title;
     private Double price;
 
     @ManyToOne
-    @JoinColumn(name="publisher_id")
     private Publisher publisher;
 
-    @ManyToMany
-    @JoinTable(
-            name = "book_author",
-            joinColumns = @JoinColumn(name="book_id"),
-            inverseJoinColumns = @JoinColumn(name="author_id")
-    )
-    private List<Author> authors = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private List<Author> authorList = new ArrayList<>();
 
-    public Book() {}
-    public Book(String title, Double price, Publisher publisher) {
+    public Book(String title, Double price, Publisher publisher, List<Author> authorList) {
         this.title = title;
         this.price = price;
         this.publisher = publisher;
+        this.authorList = authorList;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Book() {
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public Publisher getPublisher() {
-        return publisher;
-    }
-
-    public List<Author> getAuthors() {
-        return authors;
     }
 
     public void setId(Long id) {
@@ -69,7 +48,28 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
+    public void setAuthorList(List<Author> authorList) {
+        this.authorList = authorList;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public List<Author> getAuthorList() {
+        return authorList;
     }
 }
+

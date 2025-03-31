@@ -1,9 +1,9 @@
 package myproject.s29315tpo04books.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Publisher {
@@ -13,24 +13,37 @@ public class Publisher {
 
     private String name;
 
+    @OneToMany(mappedBy = "publisher", fetch = FetchType.EAGER)
+    private List<Book> bookList = new ArrayList<>();
+
+    public Publisher(String name, List<Book> bookList) {
+        this.name = name;
+        this.bookList = bookList;
+    }
+
     public Publisher() {}
-    public Publisher(String name) {
-        this.name = name;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public Long getId() {
-        return id;
+    public List<Book> getBookList() {
+        return bookList;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setBookList(List<Book> bookList) {
+        this.bookList = bookList;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
