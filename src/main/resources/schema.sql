@@ -1,38 +1,31 @@
-DROP TABLE IF EXISTS book_author_list;
-DROP TABLE IF EXISTS book_authorlist;
-DROP TABLE IF EXISTS Book_authorList;
+DROP TABLE IF EXISTS book_author;
 DROP TABLE IF EXISTS book;
-DROP TABLE IF EXISTS Book;
 DROP TABLE IF EXISTS author;
-DROP TABLE IF EXISTS Author;
 DROP TABLE IF EXISTS publisher;
-DROP TABLE IF EXISTS Publisher;
 
-CREATE TABLE IF NOT EXISTS publisher (
+CREATE TABLE publisher (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255)
-    );
+        name VARCHAR(255) NOT NULL
+);
 
-CREATE TABLE IF NOT EXISTS author (
+CREATE TABLE author (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        first_name VARCHAR(255),
-        last_name VARCHAR(255)
-    );
+        first_name VARCHAR(255) NOT NULL,
+        last_name VARCHAR(255) NOT NULL
+);
 
-CREATE TABLE IF NOT EXISTS book (
+CREATE TABLE book (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        title VARCHAR(255),
-        price DOUBLE PRECISION,
-        publisher_id BIGINT,
-        CONSTRAINT FK_publisher
-            FOREIGN KEY (publisher_id)
-            REFERENCES publisher (id)
-    );
+        title VARCHAR(255) NOT NULL,
+        price DOUBLE,
+        publisher_id INT NOT NULL,
+        CONSTRAINT fk_book_publisher FOREIGN KEY (publisher_id) REFERENCES publisher(id) ON DELETE CASCADE
+);
 
-CREATE TABLE IF NOT EXISTS book_author_list (
-        book_id INT,
-        author_list_id INT,
-        PRIMARY KEY(book_id, author_list_id),
-            CONSTRAINT FK_book FOREIGN KEY (book_id) REFERENCES book (id),
-            CONSTRAINT FK_author FOREIGN KEY (author_list_id) REFERENCES author (id)
-    );
+CREATE TABLE book_author (
+        book_id INT NOT NULL,
+        author_id INT NOT NULL,
+        PRIMARY KEY (book_id, author_id),
+        CONSTRAINT fk_ba_book FOREIGN KEY (book_id) REFERENCES book(id) ON DELETE CASCADE,
+        CONSTRAINT fk_ba_author FOREIGN KEY (author_id) REFERENCES author(id) ON DELETE CASCADE
+);

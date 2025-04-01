@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:boobs;DATABASE_TO_UPPER=false
+    url: jdbc:h2:mem:books;DATABASE_TO_UPPER=false
     username: bera
     password:
   h2:
@@ -10,7 +10,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none #for letting schema.sql creation
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     defer-datasource-initialization: true

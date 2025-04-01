@@ -12,13 +12,20 @@ public class Book {
     @GeneratedValue
     private Long id;
 
+
     private String title;
     private Double price;
 
     @ManyToOne
+    @JoinColumn(name = "publisher_id", nullable = false)
     private Publisher publisher;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
     private List<Author> authorList = new ArrayList<>();
 
     public Book(String title, Double price, Publisher publisher, List<Author> authorList) {

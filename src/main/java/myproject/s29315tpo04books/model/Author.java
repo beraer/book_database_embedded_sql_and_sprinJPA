@@ -11,10 +11,13 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
 
-    @ManyToMany(mappedBy = "authorList")
+    @ManyToMany(mappedBy = "authorList", fetch = FetchType.EAGER)
     private List<Book> bookList = new ArrayList<>();
 
     public Author(String firstName, String lastName, List<Book> bookList) {
